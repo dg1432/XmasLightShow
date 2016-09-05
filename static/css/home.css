@@ -1,0 +1,26 @@
+body.xmasLightShow {
+  background-color: black;
+}
+
+div.container {
+  background: rgba(51,102,255,0.5);
+}
+
+div.jumbotron {
+  background-color: rgba(51,102,255,0.5);
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.song_table,
+p.credits {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info {
+  color: #ffffff;
+  font-weight: bold;
+}

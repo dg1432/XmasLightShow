@@ -1,0 +1,1 @@
+Music is not included for legal purposes. I'm sure you can find it elsewhere on the Internet. Just be sure that the .mp3 stored here has the same filename as its correlating sequence file in /static/sequences.

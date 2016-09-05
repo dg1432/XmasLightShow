@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="static/css/home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="static/js/home.js"></script>
+    <title>Xmas Light Show</title>
+    <link rel="icon" type="image/png" href="http://findicons.com/files/icons/232/christmas_xp/16/christmas_tree.png">
+  </head>
+  <body class="xmasLightShow">
+    <div class="container">
+      <div class="jumbotron text-center">
+        <h1 class="xmash1">Christmas Light Show</h1>
+      </div>
+      <form action="{{ url_for('main') }}" method="post">
+        <table id="musicTable" class="table table-bordered" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th class="song_table"></th>
+              <th class="song_table">Song</th>
+              <th class="song_table">Artist</th>
+              <th class="song_table">Length</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for song in song_list %}
+              <tr>
+                {% if song_list[song].is_playing == true %}
+                  <td><input type="hidden" name="Stop"/><input class="stop_button" type="image" name="{{ song_list[song].filename }}" src="static/images/stop.png" width="36" height="36"/></td>
+                {% else %}
+                  <td><input type="hidden" name="Play"/><input class="play_button" type="image" name="{{ song_list[song].filename }}" src="static/images/play.png" width="36" height="36"/></td>
+                {% endif %}
+                <td class="song_table">{{ song_list[song].name }}</td>
+                <td class="song_table">{{ song_list[song].artist }}</td>
+                <td class="song_table">{{ song_list[song].time }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </form>
+      {{ csrf_token }}
+      <p class="credits">Play button provided by <a href="http://worldartsme.com/">WorldArtsMe</a></p>
+    </div>
+  </body>
+</html>
