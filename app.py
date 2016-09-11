@@ -41,6 +41,12 @@ song_list = {
     'name' : 'A Mad Russian\'s Christmas',
     'artist' : 'Trans-Siberian Orchestra',
     'time': '4:39'
+  },
+  'WizardsInWinter' : {
+    'filename' : 'WizardsInWinter',
+    'name' : 'Wizards in Winter',
+    'artist' : 'Trans-Siberian Orchestra',
+    'time' : '3:03'
   }
 }
 
