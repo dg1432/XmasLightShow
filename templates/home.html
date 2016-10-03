@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/nanobar/0.2.1/nanobar.min.js"></script>
     <script type="text/javascript" src="static/js/home.js"></script>
     <title>Xmas Light Show</title>
     <link rel="icon" type="image/png" href="http://findicons.com/files/icons/232/christmas_xp/16/christmas_tree.png">
@@ -31,11 +32,7 @@
           <tbody>
             {% for song in song_list %}
               <tr>
-                {% if song_list[song].is_playing == true %}
-                  <td><input type="hidden" name="Stop"/><input class="stop_button" type="image" name="{{ song_list[song].filename }}" src="static/images/stop.png" width="36" height="36"/></td>
-                {% else %}
-                  <td><input type="hidden" name="Play"/><input class="play_button" type="image" name="{{ song_list[song].filename }}" src="static/images/play.png" width="36" height="36"/></td>
-                {% endif %}
+                <td><input type="hidden" name="Play"/><input id="{{ song_list[song].filename }}" class="play_button" type="image" name="{{ song_list[song].name }}" src="static/images/play.png" width="36" height="36"/></td>
                 <td class="song_table">{{ song_list[song].name }}</td>
                 <td class="song_table">{{ song_list[song].artist }}</td>
                 <td class="song_table">{{ song_list[song].time }}</td>
@@ -45,7 +42,10 @@
         </table>
       </form>
       {{ csrf_token }}
-      <p class="credits">Play button provided by <a href="http://worldartsme.com/">WorldArtsMe</a></p>
+      <p id="current_song" class="text"/>
+      <p id="next_song" class="text"/>
+      <p id="num_songs" class="text"/>
+      <div id="nanobar"></div>
     </div>
   </body>
 </html>

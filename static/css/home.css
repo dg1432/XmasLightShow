@@ -1,5 +1,7 @@
 body.xmasLightShow {
-  background-color: black;
+  background-image: url('../images/XmasTreeBackground.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 div.container {
@@ -13,7 +15,7 @@ div.jumbotron {
 }
 
 .song_table,
-p.credits {
+.text {
   color: #ffffff;
   font-weight: bold;
 }
@@ -23,4 +25,8 @@ p.credits {
 .dataTables_info {
   color: #ffffff;
   font-weight: bold;
+}
+
+.bar {
+  background: #800000;
 }
