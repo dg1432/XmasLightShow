@@ -92,13 +92,15 @@ def play(song=None):
     start_time = int(round(time.time() * 1000))
     with open('static/sequences/' + song + '.txt', 'r') as f:
         data = f.readlines()
-        for i in range(1, len(data)):
+        i = 1
+        for i in range(1,len(data)):
             if data[i][0] != '#' and data[i].strip() != '':
                 [tm, command, value] = map(int, data[i].split(','))
                 curr_time = int(round(time.time() * 1000)) - start_time
                 while curr_time < tm:
                     curr_time = int(round(time.time() * 1000)) - start_time
                 GPIO.output(gpio_pins[command - 1], value)
+            i += 1
     # Turn off all lights
     for i in range(8):
         GPIO.output(gpio_pins[i], False)
@@ -107,9 +109,12 @@ def play(song=None):
         pygame.time.Clock().tick(10)
     return render_template('home.html', song_list=song_list)
 
-@app.route('/stop')
-def stop():
-    pass
+'''
+@app.route('/volume/<volume_value>')
+def volume(volume_value):
+    pygame.mixer.music.set_volume(int(volume_value) / 100)
+    return render_template('home.html', song_list=song_list)
+'''
 
 def reset():
     # Stop any music that is playing
@@ -120,5 +125,5 @@ def reset():
         GPIO.output(gpio_pins[i], False)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0')#, threaded=True)
 

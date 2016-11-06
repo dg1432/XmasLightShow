@@ -4,6 +4,8 @@ var songNames = [];
 var songIds = [];
 var songIsPlaying = false;
 
+$sliderValue = "";
+
 addEventListener("DOMContentLoaded", function() {
     var options = {target: document.getElementById("nanobar")};
     var nanobar = new Nanobar(options);
@@ -45,9 +47,23 @@ addEventListener("DOMContentLoaded", function() {
             }
         });
     }
+    /*var volume = document.getElementById("volume");
+    volume.addEventListener("change", function(e) {
+        e.preventDefault();
+        var request = new XMLHttpRequest();
+        request.open("GET", "/volume/" + volume.value.toString(), true);
+        request.send();
+    });*/
+    /*var stop = document.getElementById("stop_all");
+    stop.innerHTML = "<input type='hidden' name='Stop'/><input id='stop_button' class='stop_button' type='image' name='stop' src='static/images/stop.png' width='36' height='36'>";
+    var stopButton = document.getElementById("stop_button");
+    stopButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        var request = new XMLHttpRequest();
+        request.open("GET", "/stop", true);
+        request.send();
+    });*/
 }, true);
-
-
 
 function updateSongQueue() {
     if (songNames.length > 0) {

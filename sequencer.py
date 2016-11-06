@@ -1,10 +1,3 @@
-'''
-This is a tester program that plays the music/sequence files locally.
-
-The syntax to run this program is as follows:
-    python sequencer.py <filename without extension>
-'''
-
 #!/usr/bin/env python
 
 from __future__ import division
