@@ -45,8 +45,25 @@ addEventListener("DOMContentLoaded", function() {
                 }
                 songIsPlaying = true;
             }
+            if (songIsPlaying) {
+                document.getElementById("power").disabled = true;
+                document.getElementById("power").src = "static/images/power_dithered.png";
+            }
         });
     }
+    var powerButton = document.getElementById("power");
+    powerButton.addEventListener("click", function(e) {
+        if (confirm("Are you sure you want to turn off the light controller?") == true) {
+            e.preventDefault();
+            var request = new XMLHttpRequest();
+            if (!songIsPlaying) {
+                request.open("GET", "/poweroff", true);
+                request.send();
+            }
+            alert("Light controller turned off. Remember to reset the power strip to turn it back on.");
+        }
+        
+    });
     /*var volume = document.getElementById("volume");
     volume.addEventListener("change", function(e) {
         e.preventDefault();
@@ -88,6 +105,10 @@ function updateSongQueue() {
     }
     else {
         document.getElementById("num_songs").innerHTML = ""
+    }
+    if (!songIsPlaying) {
+        document.getElementById("power").disabled = false;
+        document.getElementById("power").src = "static/images/power.png";
     }
 }
 

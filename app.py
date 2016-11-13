@@ -92,7 +92,6 @@ def play(song=None):
     start_time = int(round(time.time() * 1000))
     with open('static/sequences/' + song + '.txt', 'r') as f:
         data = f.readlines()
-        i = 1
         for i in range(1,len(data)):
             if data[i][0] != '#' and data[i].strip() != '':
                 [tm, command, value] = map(int, data[i].split(','))
@@ -100,7 +99,6 @@ def play(song=None):
                 while curr_time < tm:
                     curr_time = int(round(time.time() * 1000)) - start_time
                 GPIO.output(gpio_pins[command - 1], value)
-            i += 1
     # Turn off all lights
     for i in range(8):
         GPIO.output(gpio_pins[i], False)
@@ -108,6 +106,14 @@ def play(song=None):
     while pygame.mixer.music.get_busy():
         pygame.time.Clock().tick(10)
     return render_template('home.html', song_list=song_list)
+
+@app.route('/poweroff')
+def poweroff():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    os.system("sudo poweroff")
 
 '''
 @app.route('/volume/<volume_value>')
