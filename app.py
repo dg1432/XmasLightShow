@@ -143,5 +143,5 @@ def reset():
         GPIO.output(gpio_pins[i], False)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')#, threaded=True)
+    app.run(host='0.0.0.0')
 
