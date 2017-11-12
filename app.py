@@ -56,6 +56,18 @@ song_list = {
     'name' : 'Wizards In Winter',
     'artist' : 'Trans-Siberian Orchestra',
     'time': '3:03'
+  },
+  'GodRestYeMerryGentlemen' : {
+    'filename' : 'GodRestYeMerryGentlemen',
+    'name' : 'God Rest Ye Merry Gentlemen',
+    'artist' : 'Barenaked Ladies',
+    'time': '3:26'
+  },
+  'TwelveDaysOfChristmas' : {
+    'filename' : 'TwelveDaysOfChristmas',
+    'name' : 'Twelve Days of Christmas',
+    'artist' : 'The Muppets',
+    'time': '4:18'
   }
 }
 
