@@ -127,13 +127,6 @@ def poweroff():
     func()
     os.system("sudo poweroff")
 
-'''
-@app.route('/volume/<volume_value>')
-def volume(volume_value):
-    pygame.mixer.music.set_volume(int(volume_value) / 100)
-    return render_template('home.html', song_list=song_list)
-'''
-
 def reset():
     # Stop any music that is playing
     if pygame.mixer.music.get_busy():
