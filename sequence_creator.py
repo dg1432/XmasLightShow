@@ -29,8 +29,8 @@ def main():
     print 'Starting!'
 
     # Start the music and listen for keytaps
-    start_time = int(round(time.time() * 1000))
     pygame.mixer.music.play()
+    start_time = int(round(time.time() * 1000))
     while pygame.mixer.music.get_busy():
         events = pygame.event.get()
         for event in events:

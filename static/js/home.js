@@ -139,6 +139,12 @@ function startNanobarProgress(songId, nanobar) {
     else if (songId == "TwelveDaysOfChristmas") {
         songTime = 2580;
     }
+    else if (songId == "ISawThreeShips") {
+        songTime = 1040;
+    }
+    else if (songId == "MaryDidYouKnow") {
+        songTime = 2320;
+    }
     var timeInterval = setInterval(function () {
         startTime += 1;
         nanobar.go((startTime/songTime) * 100);

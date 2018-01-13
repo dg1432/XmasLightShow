@@ -8,73 +8,19 @@ import pygame
 import time
 import sys
 import os
+from sequencer import Sequencer
 
 app = Flask(__name__)
 app.secret_key = 's3cr3t'
+
+sequencer = Sequencer()
 
 # Defines the mapping of logical mapping to physical mapping
 # 1 - 5 are lights from top to bottom on tree
 # 6 = BLUE
 # 7 = GREEN
 # 8 = RED
-
 gpio_pins = []
-
-song_list = {
-  'LetItGo' : {
-    'filename' : 'LetItGo',
-    'name' : 'Let it Go',
-    'artist' : 'Idina Menzel',
-    'time': '3:37'
-  },
-  'CarolOfTheBells' : {
-    'filename' : 'CarolOfTheBells',
-    'name' : 'Carol of the Bells',
-    'artist' : 'Trans-Siberian Orchestra',
-    'time': '3:23'
-  },
-  'MadRussianXmas' : {
-    'filename' : 'MadRussianXmas',
-    'name' : 'A Mad Russian\'s Christmas',
-    'artist' : 'Trans-Siberian Orchestra',
-    'time': '4:39'
-  },
-  'LinusAndLucy' : {
-    'filename' : 'LinusAndLucy',
-    'name' : 'Linus and Lucy',
-    'artist' :'Vince Guaraldi Trio',
-    'time': '3:03'
-  },
-  'SilentNight' : {
-    'filename' : 'SilentNight',
-    'name' : 'Silent Night',
-    'artist' : 'Christmas Carols by Candlelight',
-    'time': '2:04'
-  },
-  'WizardsInWinter' : {
-    'filename' : 'WizardsInWinter',
-    'name' : 'Wizards In Winter',
-    'artist' : 'Trans-Siberian Orchestra',
-    'time': '3:03'
-  },
-  'GodRestYeMerryGentlemen' : {
-    'filename' : 'GodRestYeMerryGentlemen',
-    'name' : 'God Rest Ye Merry Gentlemen',
-    'artist' : 'Barenaked Ladies',
-    'time': '3:26'
-  },
-  'TwelveDaysOfChristmas' : {
-    'filename' : 'TwelveDaysOfChristmas',
-    'name' : 'Twelve Days of Christmas',
-    'artist' : 'The Muppets',
-    'time': '4:18'
-  }
-}
-
-pygame.init()
-pygame.mixer.init()
-
-# Get the output pin numbers
 with open('setup.txt', 'r') as f:
     data = f.readlines()
     for i in range(8):
@@ -88,6 +34,21 @@ for i in range(8):
     GPIO.output(gpio_pins[i], GPIO.LOW)
 time.sleep(2.0)
 
+# Get the song information
+song_list = {}
+with open('song_info.txt', 'r') as f:
+    data = f.readlines()
+    for line in data:
+        song_info = line.split(' | ')
+        song_list[song_info[0]] = {}
+        song_list[song_info[0]]['filename'] = song_info[0]
+        song_list[song_info[0]]['name'] = song_info[1]
+        song_list[song_info[0]]['artist'] = song_info[2]
+        song_list[song_info[0]]['time'] = song_info[3]
+
+pygame.init()
+pygame.mixer.init()
+
 @app.route('/', methods=['GET', 'POST'])
 def main():
     form = MusicForm()
@@ -96,27 +57,7 @@ def main():
 @app.route('/play/<song>')
 def play(song=None):
     reset()
-    # Start the music
-    music = 'static/music/' + song + '.mp3'
-    pygame.mixer.music.load(music)
-    pygame.mixer.music.play()
-    # Start sequencing the associated file
-    start_time = int(round(time.time() * 1000))
-    with open('static/sequences/' + song + '.txt', 'r') as f:
-        data = f.readlines()
-        for i in range(1,len(data)):
-            if data[i][0] != '#' and data[i].strip() != '':
-                [tm, command, value] = map(int, data[i].split(','))
-                curr_time = int(round(time.time() * 1000)) - start_time
-                while curr_time < tm:
-                    curr_time = int(round(time.time() * 1000)) - start_time
-                GPIO.output(gpio_pins[command - 1], value)
-    # Turn off all lights
-    for i in range(8):
-        GPIO.output(gpio_pins[i], False)
-    # Wait for the music to end
-    while pygame.mixer.music.get_busy():
-        pygame.time.Clock().tick(10)
+    sequencer.run_sequence(song.strip())
     return render_template('home.html', song_list=song_list)
 
 @app.route('/poweroff')
@@ -137,4 +78,3 @@ def reset():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
-
