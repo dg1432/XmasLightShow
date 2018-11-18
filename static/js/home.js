@@ -145,6 +145,18 @@ function startNanobarProgress(songId, nanobar) {
     else if (songId == "MaryDidYouKnow") {
         songTime = 2320;
     }
+    else if (songId == "Believe") {
+        songTime = 2550;
+    }
+    else if (songId == "ChristmasIsHere") {
+        songTime = 1430;
+    }
+    else if (songId == "HollyJollyChristmas") {
+        songTime = 1330;
+    }
+    else if (songId == "JingleBellRock") {
+        songTime = 1300;
+    }
     var timeInterval = setInterval(function () {
         startTime += 1;
         nanobar.go((startTime/songTime) * 100);
